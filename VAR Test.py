@@ -49,7 +49,7 @@ hdidf.dropna(inplace=True)
 hdidf['HDI']=hdidf['HDI'].astype(float)
 
 hdihigh= hdidf[hdidf.HDI>0.7]
-hdilow=hdidf[hdidf.HDI<0.5]
+hdilow=hdidf[hdidf.HDI<=0.7]
 
 hdihigh=hdihigh.groupby(['DayofYear']).sum().reset_index()
 hdilow=hdilow.groupby(['DayofYear']).sum().reset_index()
@@ -57,13 +57,13 @@ hdilow=hdilow.groupby(['DayofYear']).sum().reset_index()
 
 
 
-plt.figure(figsize = (14, 10))
+plt.figure(figsize = (6, 6))
 sns.heatmap(hdidf.corr(), annot = True)
 plt.show()
 
-plt.figure(figsize = (9,9))
-plt.plot(range(hdihigh.shape[0]),(hdihigh['Deaths']),label="HDI High Countries")
-plt.plot(range(hdilow.shape[0]),(hdilow['Deaths']),label="HDI LOw Countries")
+plt.figure(figsize = (9,2))
+plt.plot(range(hdihigh.shape[0]),(hdihigh['Deaths']),label="Countires with HDI > 0.7")
+plt.plot(range(hdilow.shape[0]),(hdilow['Deaths']),label="Countires with HDI <= 0.7")
 plt.xticks(range(0,hdihigh.shape[0],5),hdihigh['DayofYear'].loc[::5],rotation=270)
 plt.xlabel('Day of Year',fontsize=18)
 plt.ylabel('People',fontsize=18)
@@ -72,9 +72,9 @@ plt.legend(loc="upper left")
 plt.show()
 
 
-plt.figure(figsize = (9,9))
-plt.plot(range(hdihigh.shape[0]),(hdihigh['Confirmed']),label="HDI High Countries")
-plt.plot(range(hdilow.shape[0]),(hdilow['Confirmed']),label="HDI LOw Countries")
+plt.figure(figsize = (9,2))
+plt.plot(range(hdihigh.shape[0]),(hdihigh['Confirmed']),label="Countires with HDI > 0.7")
+plt.plot(range(hdilow.shape[0]),(hdilow['Confirmed']),label="Countires with HDI <= 0.7")
 plt.xticks(range(0,hdihigh.shape[0],5),hdihigh['DayofYear'].loc[::5],rotation=270)
 plt.xlabel('Day of Year',fontsize=18)
 plt.ylabel('People',fontsize=18)
@@ -83,9 +83,9 @@ plt.legend(loc="upper left")
 plt.show()
 
 
-plt.figure(figsize = (9,9))
-plt.plot(range(hdihigh.shape[0]),(hdihigh['Recovered']),label="HDI High Countries")
-plt.plot(range(hdilow.shape[0]),(hdilow['Recovered']),label="HDI LOw Countries")
+plt.figure(figsize = (9,2))
+plt.plot(range(hdihigh.shape[0]),(hdihigh['Recovered']),label="Countires with HDI > 0.7")
+plt.plot(range(hdilow.shape[0]),(hdilow['Recovered']),label="Countires with HDI <= 0.7")
 plt.xticks(range(0,hdihigh.shape[0],5),hdihigh['DayofYear'].loc[::5],rotation=270)
 plt.xlabel('Day of Year',fontsize=18)
 plt.ylabel('People',fontsize=18)
@@ -94,15 +94,7 @@ plt.legend(loc="upper left")
 plt.show()
 
 
-plt.figure(figsize = (9,9))
-#plt.plot(range(hdihigh.shape[0]),(hdihigh['Recovered']),label="HDI High Countries")
-plt.plot(range(hdilow.shape[0]),(hdilow['Recovered']),label="HDI LOw Countries")
-plt.xticks(range(0,hdihigh.shape[0],5),hdihigh['DayofYear'].loc[::5],rotation=270)
-plt.xlabel('Day of Year',fontsize=18)
-plt.ylabel('People',fontsize=18)
-plt.title("Recovered cases Compare of HDI HIGH and LOW countires")
-plt.legend(loc="upper left")
-plt.show()
+
 
 
 
@@ -113,7 +105,7 @@ dataGroupedByDate.drop('SNo', axis=1, inplace=True)
 Usercountry=input("Enter Country Name to visualise -> ")
 choosenCountry = dataGrouppedByCountry[dataGrouppedByCountry['Country'].isin([Usercountry])]
 
-plt.figure(figsize = (9,9))
+plt.figure(figsize = (9,5))
 plt.plot(range(choosenCountry.shape[0]),(choosenCountry['Deaths']),label="Deaths")
 plt.plot(range(choosenCountry.shape[0]),(choosenCountry['Recovered']),label="Recovered")
 plt.xticks(range(0,choosenCountry.shape[0],5),choosenCountry['DayofYear'].loc[::5],rotation=270)
@@ -123,7 +115,7 @@ plt.title(Usercountry +" Deaths and Recovered cases")
 plt.legend(loc="upper left")
 plt.show()
 
-plt.figure(figsize = (9,9))
+plt.figure(figsize = (9,5))
 plt.plot(range(choosenCountry.shape[0]),(choosenCountry['Confirmed']))
 plt.xticks(range(0,choosenCountry.shape[0],5),choosenCountry['DayofYear'].loc[::5],rotation=270)
 plt.xlabel('Day of year',fontsize=18)
@@ -164,8 +156,7 @@ plt.show()
 
 
 
-#
-#
+
 #from statsmodels.tsa.api import VAR
 #from statsmodels.tsa.stattools import adfuller
 #from statsmodels.tools.eval_measures import rmse, aic
